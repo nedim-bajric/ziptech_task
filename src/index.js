@@ -1,5 +1,6 @@
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
+import "swiper/css";
 import App from "./App";
 import "./index.css";
 import { Provider } from "react-redux";
