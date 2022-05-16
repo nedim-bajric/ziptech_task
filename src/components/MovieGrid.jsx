@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
-import Select from "react-select";
 import MovieCard from "./MovieCard";
 
 import apiReqs, { category, movieType, tvType } from "../api/apiReqs";
@@ -10,6 +9,7 @@ const MovieGrid = (props) => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const { keyword } = useParams();
+
   useEffect(() => {
     const getList = async () => {
       let response = null;
@@ -36,7 +36,6 @@ const MovieGrid = (props) => {
     };
     getList();
   }, [props.category, keyword]);
-
   const loadMore = async () => {
     let response = null;
     if (keyword === undefined) {
@@ -59,8 +58,24 @@ const MovieGrid = (props) => {
       };
       response = await apiReqs.search(props.category, { params });
     }
+
     setItems([...items, ...response.results]);
+
     setPage(page + 1);
+  };
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: "black",
+      padding: 10,
+    }),
+    control: () => ({
+      width: "full",
+      display: "flex",
+      marginTop: 30,
+      border: "1px solid gray",
+      borderRadius: 30,
+    }),
   };
 
   return (
@@ -69,6 +84,10 @@ const MovieGrid = (props) => {
         <MovieSearch category={props.category} keyword={keyword} />
       </div>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+        {items.map((item, key) => (
+          <MovieCard category={props.category} item={item} key={key} />
+        ))}
+
         {items.map((item, key) => (
           <MovieCard category={props.category} item={item} key={key} />
         ))}

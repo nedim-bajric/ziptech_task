@@ -5,7 +5,7 @@ const Header = () => {
   const menu = [
     { path: "/", title: "Home", id: 0 },
     { path: "/movie", title: "Movies", id: 1 },
-    { path: "/tv_show", title: "TV Shows", id: 2 },
+    { path: "/tv", title: "TV Shows", id: 2 },
   ];
   const changeBackground = () => {
     if (window.scrollY >= 30) {
