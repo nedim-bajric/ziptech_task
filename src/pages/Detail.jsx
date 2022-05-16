@@ -8,8 +8,6 @@ import MovieList from "../components/MovieList";
 import CastList from "../components/CastList";
 import VideoList from "../components/VideoList";
 
-import { MdFavorite } from "react-icons/md";
-
 const Detail = () => {
   const { category, id } = useParams();
   const [item, setItem] = useState(null);
@@ -52,9 +50,6 @@ const Detail = () => {
                 <h1 className="text-4xl font-bold">
                   {item.title || item.name}
                 </h1>
-                <div className=" text-white p-2 bg-red-500 rounded cursor-pointer w-fit md:left-32 md:bottom-40 h-fit">
-                  <MdFavorite size={50} />
-                </div>
               </div>
               <div className="ml-0.5 space-x-3">
                 {item.genres &&
