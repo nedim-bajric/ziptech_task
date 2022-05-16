@@ -7,7 +7,9 @@ const PageHero = (props) => {
         backgroundImage: `linear-gradient(to top, rgb(0,0,0), rgba(0,0,0, 0)),url(${bg})`,
       }}
     >
-      <h2 className="text-white font-bold text-center">{props.children}</h2>
+      <h2 className="text-white font-bold text-center xl:text-5xl ">
+        {props.children}
+      </h2>
     </div>
   );
 };

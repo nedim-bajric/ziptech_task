@@ -8,7 +8,7 @@ const Category = () => {
   return (
     <>
       <PageHero>{category === cate.movie ? "Movies" : "TV SHOWS"}</PageHero>
-      <div className="max-w-7xl mx-auto flex flex-col space-y-7">
+      <div className="max-w-7xl mx-auto flex flex-col space-y-7 ">
         <div className="mb-3 px-8">
           <MovieGrid category={category} />
         </div>

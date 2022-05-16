@@ -6,6 +6,6 @@
 @layer{
     body{
         font-family: 'Montserrat', sans-serif;
-    @apply bg-black
+    @apply bg-black overflow-x-hidden
     }
 }

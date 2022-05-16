@@ -9,7 +9,7 @@ const MovieGrid = (props) => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-
+  console.log(items);
   const { keyword } = useParams();
   useEffect(() => {
     const getList = async () => {
@@ -67,6 +67,7 @@ const MovieGrid = (props) => {
     <>
       <div className="mb-10">
         <MovieSearch category={props.category} keyword={keyword} />
+        <div className="mb-10"></div>
       </div>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
         {items.map((item, key) => (
