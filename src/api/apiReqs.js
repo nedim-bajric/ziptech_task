@@ -46,6 +46,10 @@ const apiReqs = {
     const url = category[cate] + "/" + id + "/similar";
     return axiosClient.get(url, { params: {} });
   },
+  genres: (cate, params) => {
+    const url = "discover/" + category[cate];
+    return axiosClient.get(url, params);
+  },
 };
 
 export default apiReqs;

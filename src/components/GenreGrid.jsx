@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import MovieCard from "./MovieCard";
+import apiReqs from "../api/apiReqs";
 import { Link } from "react-router-dom";
-import apiReqs, { category, movieType, tvType } from "../api/apiReqs";
-
 const MovieGrid = (props) => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
@@ -13,50 +12,41 @@ const MovieGrid = (props) => {
   useEffect(() => {
     const getList = async () => {
       let response = null;
-      if (keyword === undefined) {
+      if (props.path === undefined) {
         const params = {};
-        switch (props.category) {
-          case category.movie:
-            response = await apiReqs.getMoviesList(movieType.upcoming, {
-              params,
-            });
-            break;
-          default:
-            response = await apiReqs.getTvList(tvType.popular, { params });
-        }
+
+        response = await apiReqs.genres(props.cat, {
+          params,
+        });
       } else {
         const params = {
-          query: keyword,
+          query: props.path,
         };
-        response = await apiReqs.search(props.category, { params });
+        response = await apiReqs.search(props.cat, { params });
       }
 
       setItems(response.results);
       setTotalPage(response.total_pages);
     };
     getList();
-  }, [props.category, keyword]);
+  }, [props.path]);
+
   const loadMore = async () => {
     let response = null;
-    if (keyword === undefined) {
+    if (props.path === undefined) {
       const params = {
         page: page + 1,
       };
-      switch (props.category) {
-        case category.movie:
-          response = await apiReqs.getMoviesList(movieType.upcoming, {
-            params,
-          });
-          break;
-        default:
-          response = await apiReqs.getTvList(tvType.popular, { params });
-      }
+
+      response = await apiReqs.getMoviesList(props.cat, {
+        params,
+      });
     } else {
       const params = {
         page: page + 1,
-        query: keyword,
+        query: props.path,
       };
-      response = await apiReqs.search(props.category, { params });
+      response = await apiReqs.search(props.cat, { params });
     }
 
     setItems([...items, ...response.results]);
@@ -68,15 +58,10 @@ const MovieGrid = (props) => {
     <>
       <div className="mb-10">
         <MovieSearch category={props.category} keyword={keyword} />
-        <div className="text-white flex items-center space-x-5 justify-center my-5 font-medium text-lg">
-          <Link to={`/genres/${props.category}/28`}>Action</Link>
-          <Link to={`/genres/${props.category}/12`}>Adventure</Link>
-          <Link to={`/genres/${props.category}/80`}>Crime</Link>
-        </div>
       </div>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
         {items.map((item, key) => (
-          <MovieCard category={props.category} item={item} key={key} />
+          <MovieCard category={props.cat} item={item} key={key} />
         ))}
       </div>
       {page < totalPage ? (
@@ -100,9 +85,9 @@ const MovieSearch = (props) => {
 
   const goToSearch = useCallback(() => {
     if (keyword.trim().length > 0) {
-      navigate(`/${category[props.category]}/search/${keyword}`);
+      navigate(`/${props.cat}/search/${keyword}`);
     }
-  }, [keyword, props.category, navigate]);
+  }, [keyword, props.cat, navigate]);
 
   useEffect(() => {
     const enterEvent = (e) => {

@@ -5,6 +5,7 @@ import PageHero from "../components/PageHero";
 
 const Category = () => {
   const { category } = useParams();
+
   return (
     <>
       <PageHero>{category === cate.movie ? "Movies" : "TV SHOWS"}</PageHero>
